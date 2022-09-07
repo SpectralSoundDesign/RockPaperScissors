@@ -1,5 +1,10 @@
 let choices = ["rock", "paper", "scissors"];
 
+const btns = document.querySelectorAll('button');
+const body = document.querySelector('body');
+const scoreDiv = document.createElement('div');
+const p = document.createElement('p');
+
 function getComputerChoice(choices) {
   return choices[Math.floor(Math.random() * choices.length)];
 }
@@ -39,18 +44,24 @@ function game(playerSelection, computerSelection) {
         score ${computerCount}`;
 }
 
-const playerSelection = prompt("Enter your selection: ");
 let playerCount = 0;
 let computerCount = 0;
 
-for (let i = 0; i < 5; i++) {
-  console.log(game(playerSelection, getComputerChoice(choices)));
-}
+btns.forEach((btn) => {
+  btn.addEventListener('click', () => {
+  let playerSelection = btn.innerText;
+  p.textContent = game(playerSelection, getComputerChoice(choices));
+  scoreDiv.appendChild(p);
+  if (playerCount == 5) {
+    p.textContent = 'Player Wins!'
+  }
+  else if (computerCount == 5) {
+    p.textContent = 'Computer Wins!'
+  }
+  });
+});
 
-if (playerCount > computerCount) {
-  console.log("you win!");
-} else if (playerCount < computerCount) {
-  console.log("you lose!");
-} else {
-  console.log("tie");
-}
+
+
+body.appendChild(scoreDiv);
+
